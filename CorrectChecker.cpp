@@ -21,7 +21,9 @@ bool CorrectChecker::CheckBrackets (const std::string& s){
             }
         }  
     }
-    std::cout<<std::endl;
+    while(!_brackets.IsEmpty()){
+        t1.AppendRow(_brackets.Pop(), std::nullopt);
+    }
     std::cout<<t1<<std::endl;
     return _brackets.IsEmpty();
     
