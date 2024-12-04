@@ -25,7 +25,7 @@ public:
         _count =0;
 
     }
-    void AppendRow(std::optional<T1> elem1, std::optional<T2> elem2){//std::optional(variant)прогуглить
+    void AppendRow(std::optional<T1> elem1, std::optional<T2> elem2){
         _col1[_count]=elem1;
         _col2[_count]=elem2;
         _count++;
