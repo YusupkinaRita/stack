@@ -18,6 +18,7 @@ public:
     bool CheckFormula(const std::string& s);//+
     bool GetState();//+
     const Table<std::string, double>& GetVarTable() const;//+
+    void AppendVarTable(std::string s, double d);
 
 
 

@@ -4,6 +4,7 @@
 #include "Table.h"
 #include "Formula.h"
 #include <optional>
+#include <cmath> 
 
 std::optional<std::string> create(bool b){
     if (b)
@@ -30,21 +31,36 @@ int main(){
     //     std::cout<< error_message<<std::endl;
     // }
 
-    std::string s="(4+5/(5-3))*4";
-    Formula f=Formula(s);
-    f.BuildPostfix();
-    //CorrectChecker check;
-    //bool x =check.CheckFormula(s);
+
+    std::string sin_str="a+b";
+    CorrectChecker check=CorrectChecker();
+    CorrectChecker check_sin=CorrectChecker();
+    check_sin.FillVariable();
+    bool sinx=check.CheckFormula(sin_str);
+    std::cout<<"is sin formula correct? "<<(sinx? "yes": "no")<<std::endl;
+    Formula fsin(sin_str);
+    double res_sin =sin(fsin.Calculate(check_sin.GetVarTable()));
+
+
+    std::string str="s+1";
     //check.FillVariable();
-    //bool x =check.CheckVariable();
-    //std::cout<<x;
+    check.AppendVarTable("s", res_sin);
+    std::cout<<check.GetVarTable()<<std::endl;
+    bool x=check.CheckFormula(str);
+    std::cout<<"is formula correct? "<<(x? "yes": "no")<<std::endl;
+    if(x){
+        Formula f(str);
+        double res =f.Calculate(check.GetVarTable());
+        std::cout<<"answer: "<<res<<std::endl;
+    }
+    
+    //double res =f.Calculate(check.GetVarTable());
+    
+    
+    //std::cout<<"answer: "<<res<<std::endl;
     
     //std::cout<<"correct? "<<"\n"<<(check.CheckBrackets(s)? "yes":"no")<<std::endl;;
-     //Table<std::string, double> t=Table<std::string, double>("", "val");
-    // t.AppendRow("a", 5);
-    // t.AppendRow("b", 5.1);
-    // t.AppendRow("cd", 5.4);
-    // std::cout<<t<<std::endl;
+    
     
 
 

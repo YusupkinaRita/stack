@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Stack.h"
 #include "Table.h"
+#include <string>
 
 
 class Formula{
@@ -30,17 +31,17 @@ public:
                 if(_prior[_expression[i]].value()==0 || _prior[_expression[i]].value() > _prior[_calcStack.Check()].value() || _calcStack.IsEmpty()){
                     if(_expression[i]!=')')
                         _calcStack.Push(_expression[i]);
-                    std::cout<<_calcStack<<std::endl;
+                    //std::cout<<_calcStack<<std::endl;
                 }
                 else{
                     while(_prior[_expression[i]].value()<=_prior[_calcStack.Check()].value() && !_calcStack.IsEmpty() ){
-                        _postfix.push_back(_calcStack.Pop());
+                        //_postfix.push_back(_calcStack.Pop());
                         if(_calcStack.Check()=='(')
                             _calcStack.Pop();
                         else
                             _postfix.push_back(_calcStack.Pop());
 
-                        std::cout<<_calcStack<<std::endl;
+                        //std::cout<<_calcStack<<std::endl;
                     }
                     if(_expression[i]!=')')
                         _calcStack.Push(_expression[i]);
@@ -52,15 +53,49 @@ public:
         while(!_calcStack.IsEmpty())
             if(_calcStack.Check()!='('&&_calcStack.Check()!=')'){
                 _postfix.push_back(_calcStack.Pop());
-                std::cout<<_calcStack<<std::endl;
+                //std::cout<<_calcStack<<std::endl;
             }
             else{
                 _calcStack.Pop();
-                std::cout<<_calcStack<<std::endl;
+                //std::cout<<_calcStack<<std::endl;
             }
-        std::cout<<_postfix;
+        std::cout<<_postfix<<std::endl;
     }
-    double Calculate();
+    double Calculate(Table<std::string, double> var_table){
+        BuildPostfix();
+        Stack<double> st;
+        double tmp2=0;
+        double tmp1=0;
+        double res_tmp=0;
+        std::string operators = "+-*/";
+        for(size_t i=0; i<_postfix.length();i++){
+            if (operators.find(_postfix[i])== std::string::npos){
+                std::string tmpstr (1,_postfix[i]);
+                if(_postfix[i]>96 && _postfix[i]<123)
+                    st.Push(var_table[tmpstr].value());
+                else
+                    st.Push (std::stod(tmpstr));
+
+            }
+            else{
+                
+                tmp1=st.Pop();
+                tmp2=st.Pop();
+                switch(_postfix[i]){
+                    case '+':res_tmp=tmp1+tmp2;break;
+                    case '-':res_tmp=tmp2-tmp1;break;
+                    case '*':res_tmp=tmp1*tmp2;break;
+                    case '/':res_tmp=tmp2/tmp1;break;
+                }
+                st.Push(res_tmp);
+                
+                
+            }
+        }
+        double res=st.Pop();
+        return res;
+
+    }
 
 
 

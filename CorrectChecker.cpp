@@ -120,3 +120,7 @@ bool CorrectChecker::CheckFormula(const std::string& s){
 bool CorrectChecker::GetState(){
     return _state;
 }
+
+void CorrectChecker::AppendVarTable(std::string s, double d){
+    _varTable.AppendRow(s,d);
+}

@@ -83,7 +83,7 @@ public:
     size_t GetCount()const{
         return _count;
     }
-    std::optional<T2> operator[]( T1 var)const{
+    std::optional<T2> operator[]( T1 var){
         for(size_t i=0;i<_table_size;i++){
             if(var==_col1[i]) 
                 return _col2[i];
