@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <optional>
+#include <cstring>
 
 
 template<typename T1, typename T2>
@@ -15,8 +16,22 @@ private:
     std::optional<T1>* _col1;
     std::optional<T2>* _col2;
     size_t _count;
+    void Expand_table(){
+        _table_size=_table_size*2;
+
+        std::optional<T1>* temp_arr=new std::optional<T1>[_table_size];
+        std::memcpy(temp_arr, _col1, _count*sizeof(std::optional<T1>));
+        delete[] _col1;
+        _col1=temp_arr;
+
+        std::optional<T2>* temp_arr2=new std::optional<T2>[_table_size];
+        std::memcpy(temp_arr2, _col2, _count*sizeof(std::optional<T2>));
+        delete[] _col2;
+        _col2=temp_arr2;
+
+    }
 public:
-    Table(std::string s1, std::string s2,size_t size=20){
+    Table(std::string s1="col1", std::string s2="col2",size_t size=20){
         _title_col1=s1;
         _title_col2=s2;
         _table_size=size;
@@ -26,11 +41,14 @@ public:
 
     }
     void AppendRow(std::optional<T1> elem1, std::optional<T2> elem2){
+        if(_count==_table_size) 
+            Expand_table();
+
         _col1[_count]=elem1;
         _col2[_count]=elem2;
         _count++;
 
-    }//прописать переполнение
+    }
 
     friend std::ostream& operator<<(std::ostream& os, const Table& t){
         os<<"|"<<std::setw(5)<<t._title_col1<<" | "<<std::setw(5)<<t._title_col2<<"|"<<std::endl;
@@ -59,10 +77,41 @@ public:
         }
         return os;
     }
+    size_t GetSize()const{
+        return _table_size;
+    }
+    size_t GetCount()const{
+        return _count;
+    }
+    std::optional<T2> operator[]( T1 var)const{
+        for(size_t i=0;i<_table_size;i++){
+            if(var==_col1[i]) 
+                return _col2[i];
+        }
+        return 0;
+     }
+    std::optional<T1>* Get_col1(){
+        return _col1;
+    }
+    std::optional<T2>* Get_col2(){
+        return _col2;
+    }
+
+
+
+    
+    
+
+    
+
+
+
+
+    
 
 
 
 
 
-    //в формуле нужно использовать таблицу приоритетов операций, и нужно(возвожно) сделать перегрузку [] для таблицы
+    //в формуле нужно использовать таблицу приоритетов операций, и нужно(возможно) сделать перегрузку [] для таблицы
 };

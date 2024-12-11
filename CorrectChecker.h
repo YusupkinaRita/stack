@@ -11,13 +11,13 @@ private:
 
 
 public:
-    CorrectChecker();
-    bool CheckBrackets(const std::string& s);
-    bool ChectVariable();
-    void FillVariable();
-    bool CheckFormula(const std::string& s);
-    bool GetState();
-    const Table<std::string, double>& GetVarTable();
+    CorrectChecker();//+
+    bool CheckBrackets(const std::string& s);//+
+    bool CheckVariable();//+
+    void FillVariable();//+
+    bool CheckFormula(const std::string& s);//+
+    bool GetState();//+
+    const Table<std::string, double>& GetVarTable() const;//+
 
 
 

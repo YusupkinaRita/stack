@@ -2,6 +2,7 @@
 #include "Stack.h"
 #include "CorrectChecker.h"
 #include "Table.h"
+#include "Formula.h"
 #include <optional>
 
 std::optional<std::string> create(bool b){
@@ -28,9 +29,17 @@ int main(){
     // catch(const char* error_message){
     //     std::cout<< error_message<<std::endl;
     // }
-    std::string s="(a+b)+c+b-d))";
-    CorrectChecker check;
-    std::cout<<"correct? "<<(check.CheckBrackets(s)? "yes":"no")<<std::endl;;
+
+    std::string s="(4+5/(5-3))*4";
+    Formula f=Formula(s);
+    f.BuildPostfix();
+    //CorrectChecker check;
+    //bool x =check.CheckFormula(s);
+    //check.FillVariable();
+    //bool x =check.CheckVariable();
+    //std::cout<<x;
+    
+    //std::cout<<"correct? "<<"\n"<<(check.CheckBrackets(s)? "yes":"no")<<std::endl;;
      //Table<std::string, double> t=Table<std::string, double>("", "val");
     // t.AppendRow("a", 5);
     // t.AppendRow("b", 5.1);
